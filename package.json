@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@account-abstraction/sdk": "0.6.0",
     "@rainbow-me/rainbowkit": "^1.0.7",
+    "@zerodevapp/contracts": "2.0.8",
+    "@zerodevapp/sdk": "3.1.37",
+    "ethers": "5.7.2",
     "next": "^13.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -19,8 +23,11 @@
   "devDependencies": {
     "@types/node": "^18.16.12",
     "@types/react": "^18.2.6",
+    "autoprefixer": "^10.4.14",
     "eslint": "^8.15.0",
     "eslint-config-next": "^13.4.3",
+    "postcss": "^8.4.27",
+    "tailwindcss": "^3.3.3",
     "typescript": "^5.0.4"
   }
 }
