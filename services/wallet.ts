@@ -19,8 +19,8 @@ export const getSmartAccount = async (
   const api = new SimpleAccountAPI({
     owner: signer,
     provider,
-    entryPointAddress: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
-    factoryAddress: "0x9406Cc6185a346906296840746125a0E44976454",
+    entryPointAddress: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    factoryAddress: "0x851356ae760d987E095750cCeb3bC6014560891C",
     paymasterAPI,
   });
   return api;
@@ -36,7 +36,7 @@ export const sendNewTransaction = async (
   const paymasterAPI = await getPaymaster("http://127.0.0.1:4000/api/sign/");
 
   const entrypointView = EntryPoint__factory.connect(
-    "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+    "0x5fbdb2315678afecb367f032d93f642f64180aa3",
     signer
   );
 
@@ -48,8 +48,8 @@ export const sendNewTransaction = async (
   const api = new SimpleAccountAPI({
     owner: signer,
     provider,
-    entryPointAddress: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
-    factoryAddress: "0x9406Cc6185a346906296840746125a0E44976454",
+    entryPointAddress: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    factoryAddress: "0x851356ae760d987E095750cCeb3bC6014560891C",
     paymasterAPI,
   });
 
@@ -63,8 +63,8 @@ export const sendNewTransaction = async (
   console.log(userOp);
   const client = await getHttpRpcClient(
     provider,
-    "http://localhost:3001/rpc",
-    "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
+    "http://localhost:3000/rpc",
+    "0x5fbdb2315678afecb367f032d93f642f64180aa3"
   );
 
   txnState("Sending transaction to bundler...", stateFns);
@@ -73,7 +73,7 @@ export const sendNewTransaction = async (
   txnState(`userOp hash: ${uoHash}`, stateFns);
   console.log(`userOp hash: ${uoHash}`);
   txnState("waiting for transaction confirmation", stateFns);
-  const fromBlock = await provider.getBlockNumber() - 1000;
+  const fromBlock = (await provider.getBlockNumber()) - 1000;
   let txnHash = (await getUserOpReceipt(
     uoHash,
     180000,
