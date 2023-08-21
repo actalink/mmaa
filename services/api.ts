@@ -93,7 +93,7 @@ export const getUserOpReceipt = async (
   while (Date.now() < endtime) {
     const events = await entrypoint.queryFilter(
       entrypoint.filters.UserOperationEvent(userOpHash),
-      fromBlock,
+      0,
       "latest"
     );
     if (events.length > 0) {

@@ -2,7 +2,11 @@ import Image from "next/image";
 import { useAccount } from "wagmi";
 import { useEthersProvider, useEthersSigner } from "../services/api";
 import { useEffect, useState } from "react";
-import { getSmartAccount, sendNewTransaction, getSmartAccountAPI } from "../services/wallet";
+import {
+  getSmartAccount,
+  sendNewTransaction,
+  getSmartAccountAPI,
+} from "../services/wallet";
 import { ethers } from "ethers";
 import { SimpleAccountAPI } from "@zerodevapp/sdk/dist/src/SimpleAccountAPI";
 import Cubes from "../assets/cubes.png";
@@ -18,7 +22,6 @@ const Main = () => {
   const [smartAccountAddress, setSmartAccountAddress] = useState<
     string | undefined
   >(undefined);
-  console.log("SmartAccountAddress :: -----> ", smartAccountAddress);
   const [isDeployed, setIsDeployed] = useState<boolean>(false);
   const [txnState, setTxnState] = useState<string | undefined>(undefined);
   const getSmartAccountAddress = (api: SimpleAccountAPI) => {
@@ -52,7 +55,6 @@ const Main = () => {
     }
   };
   useEffect(() => {
-    getWallet();
     // If not already deployed account
     getSmartAccountAPI(
       provider as ethers.providers.JsonRpcProvider,
@@ -61,11 +63,12 @@ const Main = () => {
       api.getInitCode().then((initcode) => {
         if (initcode === "0x") {
           setIsDeployed(true);
+          getWallet();
         } else {
           sendTransaction();
         }
       });
-    })
+    });
     // Send Transaction
     // Else show account
   }, [address, isConnected, provider, signer]);
@@ -79,6 +82,7 @@ const Main = () => {
       )
         .then((txnHash) => {
           if (txnHash) {
+            console.log("calling getWallet.");
             getWallet();
           }
         })
@@ -92,7 +96,7 @@ const Main = () => {
 
   return (
     <>
-      <Navbar smartWallet={(isDeployed && smartAccountAddress && smartAccountAddress.length > 0) ? smartAccountAddress : ""} />
+      <Navbar smartWallet={smartAccountAddress} />
       <div className="flex justify-center items-start">
         {/* <Main /> */}
         <div className="bg-violet-100 w-fit pb-12 px-28 rounded-3xl flex flex-col justify-start items-center text-center">
