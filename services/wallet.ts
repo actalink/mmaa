@@ -92,12 +92,14 @@ export const sendNewTransaction = async (
   console.log(`userOp hash: ${uoHash}`);
   txnState("waiting for transaction confirmation", stateFns);
   const fromBlock = (await provider.getBlockNumber()) - 1000;
+  const chainId = (await provider.getNetwork()).chainId;
+  const queryFromBlock = chainId === 31337 ? 0 : fromBlock;
   let txnHash = (await getUserOpReceipt(
     uoHash,
     180000,
     3000,
     entrypointView,
-    fromBlock
+    queryFromBlock
   )) as string;
   txnState(`Transaction successful✅, txnHash: ${txnHash}`, stateFns);
   return txnHash;
