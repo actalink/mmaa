@@ -1,6 +1,4 @@
-import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import { usePublicClient, useWalletClient } from "wagmi";
 import { useEthersProvider, useEthersSigner } from "../services/api";
 import { useEffect, useState } from "react";
 import { getSmartAccount, sendNewTransaction } from "../services/wallet";
@@ -21,6 +19,7 @@ const Wallet = () => {
   const [txnState, setTxnState] = useState<string | undefined>(undefined);
   const getSmartAccountAddress = (api: SimpleAccountAPI) => {
     api.getAccountAddress().then((address) => {
+      console.log("Account address --->", address);
       setSmartAccountAddress(address);
     });
   };
