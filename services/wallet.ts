@@ -1,19 +1,16 @@
 import {
-  UserOperationStruct,
   EntryPoint__factory,
 } from "@zerodevapp/contracts";
 import { ethers, Signer } from "ethers";
 import { SimpleAccountAPI } from "@zerodevapp/sdk/dist/src/SimpleAccountAPI";
-import { encodeERC20Approval, printOp } from "../utils/utils";
+import { printOp } from "../utils/utils";
 import { getHttpRpcClient } from "../utils/utils";
 import { getPaymaster } from "./paymaster";
 import { txnState, getUserOpReceipt } from "./api";
-import { EntryPoint } from "../typechain-types";
-import "dotenv/config";
 
 const paymasterURL = process.env.NEXT_PUBLIC_PAYMASTER_URL as string;
 const bundlerURL = process.env.NEXT_PUBLIC_BUNDLER_URL as string;
-const entrypointAddress = process.env.NEXT_PUBLIC_ENTRY_POINT as string;
+const entryPointAddress = process.env.NEXT_PUBLIC_ENTRY_POINT as string;
 const factoryAddress = process.env.NEXT_PUBLIC_ACCOUNT_FACTORY as string;
 
 export const getSmartAccount = async (
@@ -24,8 +21,8 @@ export const getSmartAccount = async (
   const api = new SimpleAccountAPI({
     owner: signer,
     provider,
-    entryPointAddress: entrypointAddress,
-    factoryAddress: factoryAddress,
+    entryPointAddress,
+    factoryAddress,
     paymasterAPI,
   });
   return api;
@@ -40,7 +37,7 @@ export const sendNewTransaction = async (
 
   const paymasterAPI = await getPaymaster(paymasterURL);
 
-  const entrypointView = EntryPoint__factory.connect(entrypointAddress, signer);
+  const entrypointView = EntryPoint__factory.connect(entryPointAddress, signer);
 
   txnState(
     "waiting for verifying paymaster to sponsor the transaction request...",
@@ -50,13 +47,13 @@ export const sendNewTransaction = async (
   const api = new SimpleAccountAPI({
     owner: signer,
     provider,
-    entryPointAddress: entrypointAddress,
-    factoryAddress: factoryAddress,
+    entryPointAddress,
+    factoryAddress,
     paymasterAPI,
   });
 
   const op = await api.createSignedUserOp({
-    target: "0x59E1449De955CeF82e7D6D510257b7E12f425Fa7",
+    target: entryPointAddress,
     data: "0x48656c6c6f20776f726c64",
     gasLimit: 3000000,
   });
@@ -66,7 +63,7 @@ export const sendNewTransaction = async (
   const client = await getHttpRpcClient(
     provider,
     bundlerURL,
-    entrypointAddress
+    entryPointAddress
   );
 
   txnState("Sending transaction to bundler...", stateFns);

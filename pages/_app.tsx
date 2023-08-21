@@ -33,7 +33,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: "Actalink MM",
+  appName: "Actalink Metamask Abstraction",
   projectId: "9872e33ca0cd8ecb63cf1f57720135f4",
   chains,
 });
