@@ -1,15 +1,12 @@
-import type { NextPage } from "next";
 import Image from "next/image";
 import { useAccount } from "wagmi";
-import { usePublicClient, useWalletClient } from "wagmi";
 import { useEthersProvider, useEthersSigner } from "../services/api";
 import { useEffect, useState } from "react";
-import { getSmartAccount, sendNewTransaction } from "../services/wallet";
+import { getSmartAccount, sendNewTransaction, getSmartAccountAPI } from "../services/wallet";
 import { ethers } from "ethers";
 import { SimpleAccountAPI } from "@zerodevapp/sdk/dist/src/SimpleAccountAPI";
 import Cubes from "../assets/cubes.png";
-import Connectbutton from "./Connectbutton";
-import CreateButton from "./CreateButton";
+import Navbar from "./Navbar";
 
 const Main = () => {
   const { address, isConnected } = useAccount();
@@ -21,6 +18,7 @@ const Main = () => {
   const [smartAccountAddress, setSmartAccountAddress] = useState<
     string | undefined
   >(undefined);
+  console.log("SmartAccountAddress :: -----> ", smartAccountAddress);
   const [isDeployed, setIsDeployed] = useState<boolean>(false);
   const [txnState, setTxnState] = useState<string | undefined>(undefined);
   const getSmartAccountAddress = (api: SimpleAccountAPI) => {
@@ -45,8 +43,8 @@ const Main = () => {
       )
         .then((api) => {
           setSmartAccount(api);
-          getSmartAccountAddress(api);
           isAccountDeployed(api);
+          getSmartAccountAddress(api);
         })
         .catch((err) => {
           console.log(err);
@@ -55,6 +53,21 @@ const Main = () => {
   };
   useEffect(() => {
     getWallet();
+    // If not already deployed account
+    getSmartAccountAPI(
+      provider as ethers.providers.JsonRpcProvider,
+      signer as ethers.providers.JsonRpcSigner
+    ).then((api) => {
+      api.getInitCode().then((initcode) => {
+        if (initcode === "0x") {
+          setIsDeployed(true);
+        } else {
+          sendTransaction();
+        }
+      });
+    })
+    // Send Transaction
+    // Else show account
   }, [address, isConnected, provider, signer]);
 
   const sendTransaction = () => {
@@ -78,29 +91,33 @@ const Main = () => {
   };
 
   return (
-    <div className="bg-violet-100 w-fit pb-12 px-28 rounded-3xl flex flex-col justify-start items-center text-center">
-      <div>
-        <Image src={Cubes} alt="cubes" height={300} width={300} />
+    <>
+      <Navbar smartWallet={(isDeployed && smartAccountAddress && smartAccountAddress.length > 0) ? smartAccountAddress : ""} />
+      <div className="flex justify-center items-start">
+        {/* <Main /> */}
+        <div className="bg-violet-100 w-fit pb-12 px-28 rounded-3xl flex flex-col justify-start items-center text-center">
+          <div>
+            <Image src={Cubes} alt="cubes" height={300} width={300} />
+          </div>
+          <div className="text-lg font-thin">
+            <p className="mb-4">
+              Unlock the potential of web3 payments with Actalink account
+              abstraction protocol.
+            </p>
+            <p>Benefit from Smart Wallets in one unified experience.</p>
+            <p>Log-in with MetaMask Wallet as SSO (private keys)</p>
+            <p className="mb-4">and enjoy the seamless experience.</p>
+            <p>
+              Sign up/in the Abstraction Wallet with the guarantee of safety &
+              security
+            </p>
+            <p className="mb-4">
+              provided by MetaMask ecosystem. &quot;Create Smart Wallet &quot;
+            </p>
+          </div>
+        </div>
       </div>
-      <div className="text-lg font-thin">
-        <p className="mb-4">
-          Unlock the potential of web3 payments with Actalink account
-          abstraction protocol.
-        </p>
-        <p>Benefit from Smart Wallets in one unified experience.</p>
-        <p>Log-in with MetaMask Wallet as SSO (private keys)</p>
-        <p className="mb-4">and enjoy the seamless experience.</p>
-        <p>
-          Sign up/in the Abstraction Wallet with the guarantee of safety &
-          security
-        </p>
-        <p className="mb-4">
-          provided by MetaMask ecosystem. &quot;Create Smart Wallet &quot;
-        </p>
-      </div>
-      {address === undefined && <Connectbutton />}
-      {address !== undefined && <CreateButton />}
-    </div>
+    </>
   );
 };
 

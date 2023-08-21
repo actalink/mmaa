@@ -31,6 +31,21 @@ export const getSmartAccount = async (
   return api;
 };
 
+export const getSmartAccountAPI = async (
+  provider: ethers.providers.JsonRpcProvider,
+  signer: Signer
+) => {
+  const paymasterAPI = await getPaymaster(paymasterURL);
+  const api = new SimpleAccountAPI({
+    owner: signer,
+    provider,
+    entryPointAddress: entrypointAddress,
+    factoryAddress: factoryAddress,
+    paymasterAPI,
+  });
+  return api;
+};
+
 export const sendNewTransaction = async (
   provider: ethers.providers.JsonRpcProvider,
   signer: Signer,
@@ -57,7 +72,7 @@ export const sendNewTransaction = async (
 
   // Send "Hello World" to a random address
   const op = await api.createSignedUserOp({
-    target: "0x59E1449De955CeF82e7D6D510257b7E12f425Fa7",
+    target: "0x83fc020d7681513263042e6c2c93d0137318dc0d",
     data: "0x48656c6c6f20776f726c64",
     gasLimit: 3000000,
   });
