@@ -7,6 +7,7 @@ import { ethers } from "ethers";
 import { SimpleAccountAPI } from "@zerodevapp/sdk/dist/src/SimpleAccountAPI";
 import Cubes from "../assets/cubes.png";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Main = () => {
   const { address, isConnected } = useAccount();
@@ -76,8 +77,7 @@ const Main = () => {
         provider as ethers.providers.JsonRpcProvider,
         signer as ethers.providers.JsonRpcSigner,
         setTxnState
-      )
-        .then((txnHash) => {
+      ).then((txnHash) => {
           if (txnHash) {
             getWallet();
           }
@@ -93,29 +93,23 @@ const Main = () => {
   return (
     <>
       <Navbar smartWallet={(isDeployed && smartAccountAddress && smartAccountAddress.length > 0) ? smartAccountAddress : ""} />
-      <div className="flex justify-center items-start">
-        {/* <Main /> */}
+      <div className="flex flex-col justify-center items-center">
         <div className="bg-violet-100 w-fit pb-12 px-28 rounded-3xl flex flex-col justify-start items-center text-center">
           <div>
             <Image src={Cubes} alt="cubes" height={300} width={300} />
           </div>
-          <div className="text-lg font-thin">
-            <p className="mb-4">
-              Unlock the potential of web3 payments with Actalink account
-              abstraction protocol.
+          <div className="flex flex-col items-center text-lg">
+            <p className="mb-4 font-bold">
+              Unlock the potential of Web3 payments with <span className="text-violet-500">Actalink Abstraction dApp.</span>
             </p>
-            <p>Benefit from Smart Wallets in one unified experience.</p>
-            <p>Log-in with MetaMask Wallet as SSO (private keys)</p>
-            <p className="mb-4">and enjoy the seamless experience.</p>
-            <p>
-              Sign up/in the Abstraction Wallet with the guarantee of safety &
-              security
-            </p>
-            <p className="mb-4">
-              provided by MetaMask ecosystem. &quot;Create Smart Wallet &quot;
-            </p>
+            <ul className="list-disc text-left">
+              <li>Use your trusted MetaMask Wallet as SSO</li>
+              <li>Create new Smart Wallet</li>
+              <li>Get unified experience with seamless integration</li>
+            </ul>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );
