@@ -1,42 +1,32 @@
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  RainbowKitProvider,
+  connectorsForWallets,
+} from "@rainbow-me/rainbowkit";
+import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import type { AppProps } from "next/app";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import {
-  arbitrum,
-  goerli,
-  mainnet,
-  optimism,
-  polygon,
-  polygonMumbai,
-  zora,
-  localhost,
-  hardhat,
-} from "wagmi/chains";
+import { localhost, hardhat } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    zora,
-    goerli,
-    polygonMumbai,
     localhost,
     hardhat,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [] : []),
   ],
   [publicProvider()]
 );
 
-const { connectors } = getDefaultWallets({
-  appName: "Actalink MM",
-  projectId: "9872e33ca0cd8ecb63cf1f57720135f4",
-  chains,
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: "Recommended",
+    wallets: [
+      metaMaskWallet({ chains, projectId: "9872e33ca0cd8ecb63cf1f57720135f4" }),
+    ],
+  },
+]);
 
 const wagmiConfig = createConfig({
   autoConnect: true,
