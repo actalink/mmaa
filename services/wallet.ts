@@ -7,20 +7,25 @@ import { SimpleAccountAPI } from "@zerodevapp/sdk/dist/src/SimpleAccountAPI";
 import { encodeERC20Approval, printOp } from "../utils/utils";
 import { getHttpRpcClient } from "../utils/utils";
 import { getPaymaster } from "./paymaster";
-import "dotenv/config";
 import { txnState, getUserOpReceipt } from "./api";
 import { EntryPoint } from "../typechain-types";
+import "dotenv/config";
+
+const paymasterURL = process.env.NEXT_PUBLIC_PAYMASTER_URL as string;
+const bundlerURL = process.env.NEXT_PUBLIC_BUNDLER_URL as string;
+const entrypointAddress = process.env.NEXT_PUBLIC_ENTRY_POINT as string;
+const factoryAddress = process.env.NEXT_PUBLIC_ACCOUNT_FACTORY as string;
 
 export const getSmartAccount = async (
   provider: ethers.providers.JsonRpcProvider,
   signer: Signer
 ) => {
-  const paymasterAPI = await getPaymaster(process.env.PAYMASTER_URL as string);
+  const paymasterAPI = await getPaymaster(paymasterURL);
   const api = new SimpleAccountAPI({
     owner: signer,
     provider,
-    entryPointAddress: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
-    factoryAddress: "0x851356ae760d987E095750cCeb3bC6014560891C",
+    entryPointAddress: entrypointAddress,
+    factoryAddress: factoryAddress,
     paymasterAPI,
   });
   return api;
@@ -33,12 +38,9 @@ export const sendNewTransaction = async (
 ) => {
   txnState("creating new userOp", stateFns);
 
-  const paymasterAPI = await getPaymaster("http://127.0.0.1:4000/api/sign/");
+  const paymasterAPI = await getPaymaster(paymasterURL);
 
-  const entrypointView = EntryPoint__factory.connect(
-    "0x5fbdb2315678afecb367f032d93f642f64180aa3",
-    signer
-  );
+  const entrypointView = EntryPoint__factory.connect(entrypointAddress, signer);
 
   txnState(
     "waiting for verifying paymaster to sponsor the transaction request...",
@@ -48,8 +50,8 @@ export const sendNewTransaction = async (
   const api = new SimpleAccountAPI({
     owner: signer,
     provider,
-    entryPointAddress: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
-    factoryAddress: "0x851356ae760d987E095750cCeb3bC6014560891C",
+    entryPointAddress: entrypointAddress,
+    factoryAddress: factoryAddress,
     paymasterAPI,
   });
 
@@ -63,8 +65,8 @@ export const sendNewTransaction = async (
   console.log(userOp);
   const client = await getHttpRpcClient(
     provider,
-    "http://localhost:3000/rpc",
-    "0x5fbdb2315678afecb367f032d93f642f64180aa3"
+    bundlerURL,
+    entrypointAddress
   );
 
   txnState("Sending transaction to bundler...", stateFns);
