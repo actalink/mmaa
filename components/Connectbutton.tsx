@@ -1,11 +1,7 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
 
-const Connectbutton = ({
-  smartWallet,
-}: {
-  smartWallet: string | undefined;
-}) => {
+const Connectbutton = ({ smartWallet }: { smartWallet: string }) => {
   return (
     <ConnectButton.Custom>
       {({
@@ -99,7 +95,7 @@ const Connectbutton = ({
                       ? ` (${account.displayBalance})`
                       : ""}
                   </button>
-                  {smartWallet !== undefined ? (
+                  {smartWallet.length > 0 ? (
                     <div className="relative flex flex-col justify-start items-center">
                       <button
                         onClick={console.log} // copy address to clipboard
