@@ -55,6 +55,7 @@ export const sendNewTransaction = async (
     paymasterAPI,
   });
 
+  // Send "Hello World" to a random address
   const op = await api.createSignedUserOp({
     target: "0x59E1449De955CeF82e7D6D510257b7E12f425Fa7",
     data: "0x48656c6c6f20776f726c64",

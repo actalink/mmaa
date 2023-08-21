@@ -38,9 +38,9 @@ const Connectbutton = () => {
                   <button
                     onClick={openConnectModal}
                     type="button"
-                    className="bg-violet-500 py-1 px-4 font-bold text-xl rounded-full text-white"
+                    className="bg-violet-500 py-1 px-4 font-normal text-xl rounded-full text-white"
                   >
-                    Create Smart Wallet
+                    Connect Metamask
                   </button>
                 );
               }
@@ -60,7 +60,7 @@ const Connectbutton = () => {
                   <button
                     onClick={openChainModal}
                     style={{ display: "flex", alignItems: "center" }}
-                    className="bg-violet-500 py-1 px-4 font-bold text-xl rounded-full text-white"
+                    className="border order-solid border-violet-500 py-1 px-4 font-normal text-xl rounded-full text-violet-500"
                     type="button"
                   >
                     {chain.hasIcon && (
@@ -88,7 +88,7 @@ const Connectbutton = () => {
                   <button
                     onClick={openAccountModal}
                     type="button"
-                    className="bg-violet-500 py-1 px-4 font-bold text-xl rounded-full text-white"
+                    className="border order-solid border-violet-500 py-1 px-4 font-normal text-xl rounded-full text-violet-500"
                   >
                     {account.displayName}
                     {account.displayBalance

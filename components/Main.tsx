@@ -9,6 +9,7 @@ import { ethers } from "ethers";
 import { SimpleAccountAPI } from "@zerodevapp/sdk/dist/src/SimpleAccountAPI";
 import Cubes from "../assets/cubes.png";
 import Connectbutton from "./Connectbutton";
+import CreateButton from "./CreateButton";
 
 const Main = () => {
   const { address, isConnected } = useAccount();
@@ -98,6 +99,7 @@ const Main = () => {
         </p>
       </div>
       {address === undefined && <Connectbutton />}
+      {address !== undefined && <CreateButton />}
     </div>
   );
 };
