@@ -19,7 +19,6 @@ const Wallet = () => {
   const [txnState, setTxnState] = useState<string | undefined>(undefined);
   const getSmartAccountAddress = (api: SimpleAccountAPI) => {
     api.getAccountAddress().then((address) => {
-      console.log("Account address --->", address);
       setSmartAccountAddress(address);
     });
   };

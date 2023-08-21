@@ -8,16 +8,16 @@ import { getHttpRpcClient } from "../utils/utils";
 import { getPaymaster } from "./paymaster";
 import { txnState, getUserOpReceipt } from "./api";
 
-const entryPointAddress = ethers.utils.getAddress(process.env.NEXT_PUBLIC_ENTRY_POINT || "");
-const factoryAddress = ethers.utils.getAddress(process.env.NEXT_PUBLIC_ACCOUNT_FACTORY || "");
-const paymasterURL = process.env.NEXT_PUBLIC_PAYMASTER_URL || "";
-const bundlerURL = process.env.NEXT_PUBLIC_BUNDLER_URL || "";
+const paymasterURL = process.env.NEXT_PUBLIC_PAYMASTER_URL as string;
+const bundlerURL = process.env.NEXT_PUBLIC_BUNDLER_URL as string;
+const entryPointAddress = process.env.NEXT_PUBLIC_ENTRY_POINT as string;
+const factoryAddress = process.env.NEXT_PUBLIC_ACCOUNT_FACTORY as string;
 
 export const getSmartAccount = async (
   provider: ethers.providers.JsonRpcProvider,
   signer: Signer
 ) => {
-  const paymasterAPI = await getPaymaster(process.env.PAYMASTER_URL as string);
+  const paymasterAPI = await getPaymaster(paymasterURL);
   const api = new SimpleAccountAPI({
     owner: signer,
     provider,
@@ -37,10 +37,7 @@ export const sendNewTransaction = async (
 
   const paymasterAPI = await getPaymaster(paymasterURL);
 
-  const entrypointView = EntryPoint__factory.connect(
-    entryPointAddress,
-    signer
-  );
+  const entrypointView = EntryPoint__factory.connect(entryPointAddress, signer);
 
   txnState(
     "waiting for verifying paymaster to sponsor the transaction request...",
