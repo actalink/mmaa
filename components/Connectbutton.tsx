@@ -2,6 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import React from "react";
 
 const Connectbutton = ({ smartWallet }: { smartWallet: string }) => {
+  console.log(smartWallet);
   return (
     <ConnectButton.Custom>
       {({

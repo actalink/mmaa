@@ -7,14 +7,15 @@ import {
 import { metaMaskWallet } from "@rainbow-me/rainbowkit/wallets";
 import type { AppProps } from "next/app";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { localhost, hardhat } from "wagmi/chains";
+import { localhost, hardhat, goerli } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     localhost,
     hardhat,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [] : []),
+    goerli,
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : []),
   ],
   [publicProvider()]
 );

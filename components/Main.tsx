@@ -29,6 +29,7 @@ const Main = () => {
   const [txnState, setTxnState] = useState<string | undefined>(undefined);
   const getSmartAccountAddress = (api: SimpleAccountAPI) => {
     api.getAccountAddress().then((address) => {
+      console.log("address =====>>>: ", address);
       setSmartAccountAddress(address);
     });
   };
