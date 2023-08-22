@@ -1,13 +1,12 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import type { NextPage } from "next";
+import Image from "next/image";
+import Logo from "../assets/logo.svg";
+import Connectbutton from "./Connectbutton";
 
-const Navbar = () => {
+const Navbar = ({ smartWallet }: { smartWallet: string }) => {
   return (
-    <div className="flex justify-between items-center py-4 px-4 outline-none border-0">
-      <h1 className="text-3xl font-medium">
-        A<span className="text-acta-violet">c</span>talink MM
-      </h1>
-      <ConnectButton />
+    <div className="flex justify-between items-center py-4 px-12 my-6 outline-none border-0">
+      <Image src={Logo} alt="logo" width={170} height={80} />
+      <Connectbutton smartWallet={smartWallet} />
     </div>
   );
 };

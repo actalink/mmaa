@@ -96,6 +96,7 @@ export const getUserOpReceipt = async (
       fromBlock,
       "latest"
     );
+    console.log(events);
     if (events.length > 0) {
       return events[0].transactionHash;
     }
