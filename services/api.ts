@@ -93,9 +93,10 @@ export const getUserOpReceipt = async (
   while (Date.now() < endtime) {
     const events = await entrypoint.queryFilter(
       entrypoint.filters.UserOperationEvent(userOpHash),
-      0,
+      fromBlock,
       "latest"
     );
+    console.log(events);
     if (events.length > 0) {
       return events[0].transactionHash;
     }
