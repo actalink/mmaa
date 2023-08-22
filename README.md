@@ -1,37 +1,19 @@
-This is a [RainbowKit](https://rainbowkit.com) + [wagmi](https://wagmi.sh) + [Next.js](https://nextjs.org/) project bootstrapped with [`create-rainbowkit`](https://github.com/rainbow-me/rainbowkit/tree/main/packages/create-rainbowkit).
+# ActaLink Account Abstraction for Metamask
+This project uses [RainbowKit](https://rainbowkit.com) + [wagmi](https://wagmi.sh) + [Next.js](https://nextjs.org/) bootstrapped with [`create-rainbowkit`](https://github.com/rainbow-me/rainbowkit/tree/main/packages/create-rainbowkit).
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies and run the development server:
 
 ```bash
-npm run dev
+yarn install
+yarn run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more about this stack, take a look at the following resources:
-
-- [RainbowKit Documentation](https://rainbowkit.com) - Learn how to customize your wallet connection flow.
-- [wagmi Documentation](https://wagmi.sh) - Learn how to interact with Ethereum.
-- [Next.js Documentation](https://nextjs.org/docs) - Learn how to build a Next.js application.
-
-You can check out [the RainbowKit GitHub repository](https://github.com/rainbow-me/rainbowkit) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-
-## Development
-
-```
-yarn
-yarn dev
-```
+## Screenshots
+![NAVH-actalink-2023-0](https://github.com/actalink/mmaa/assets/13261372/8734ea71-d735-41e7-908c-b2bde47c91dd)
+![NAVH-actalink-2023-1](https://github.com/actalink/mmaa/assets/13261372/3a8ba31a-8d5a-4393-97cc-230222a4a7c1)
+![NAVH-actalink-2023-2](https://github.com/actalink/mmaa/assets/13261372/158104f8-bf11-4601-8e65-8f06419abe8d)
+![NAVH-actalink-2023-3](https://github.com/actalink/mmaa/assets/13261372/b825ba5b-86ae-44ee-8b0b-4d0a1ffd5ca8)
