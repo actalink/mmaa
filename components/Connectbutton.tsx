@@ -41,7 +41,7 @@ const Connectbutton = ({ smartWallet }: { smartWallet: string }) => {
                     type="button"
                     className="bg-violet-500 py-1 px-4 font-normal text-xl rounded-full text-white"
                   >
-                    Create Smart Wallet using Metamask
+                    Create Smart Wallet
                   </button>
                 );
               }

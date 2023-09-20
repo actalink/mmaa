@@ -43,7 +43,7 @@ const Main = () => {
   };
 
   const getWallet = () => {
-    if (address !== undefined && isConnected) {
+    if (signer !== undefined && isConnected) {
       getSmartAccount(
         provider as ethers.providers.JsonRpcProvider,
         signer as ethers.providers.JsonRpcSigner
@@ -60,19 +60,21 @@ const Main = () => {
   };
   useEffect(() => {
     // If not already deployed account
-    getSmartAccountAPI(
-      provider as ethers.providers.JsonRpcProvider,
-      signer as ethers.providers.JsonRpcSigner
-    ).then((api) => {
-      api.getInitCode().then((initcode) => {
-        if (initcode === "0x") {
-          setIsDeployed(true);
-          getWallet();
-        } else {
-          sendTransaction();
-        }
+    if (isConnected && signer !== undefined) {
+      getSmartAccountAPI(
+        provider as ethers.providers.JsonRpcProvider,
+        signer as ethers.providers.JsonRpcSigner
+      ).then((api) => {
+        api.getInitCode().then((initcode) => {
+          if (initcode === "0x") {
+            setIsDeployed(true);
+            getWallet();
+          } else {
+            sendTransaction();
+          }
+        });
       });
-    });
+    }
     // Send Transaction
     // Else show account
   }, [address, isConnected, provider, signer]);
@@ -102,12 +104,11 @@ const Main = () => {
     <>
       <Navbar
         smartWallet={
-          isDeployed && smartAccountAddress && smartAccountAddress.length > 0
+          smartAccountAddress && smartAccountAddress.length > 0
             ? smartAccountAddress
             : ""
         }
       />
-      {!isDeployed ? <Welcomepage /> : <Successpage />}
     </>
   );
 };

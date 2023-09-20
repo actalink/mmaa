@@ -5,9 +5,14 @@ import { ErrTransactionFailedGasChecks } from "../../utils/errors";
 import { PaymasterAPI } from "./PaymasterAPI";
 import { hexifyUserOp } from "../../utils/utils";
 
+type PaymasterProvider = "STACKUP" | "PIMLICO" | "ALCHEMY";
+
 export class VerifyingPaymasterAPI extends PaymasterAPI {
-  constructor(readonly paymasterUrl: string) {
-    super();
+  constructor(
+    readonly paymasterUrl: string,
+    paymasterProvider: PaymasterProvider
+  ) {
+    super(paymasterProvider);
   }
 
   async getPaymasterResp(

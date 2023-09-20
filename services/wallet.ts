@@ -1,8 +1,7 @@
-import {
-  EntryPoint__factory,
-} from "@zerodevapp/contracts";
+import { EntryPoint__factory } from "@zerodevapp/contracts";
 import { ethers, Signer } from "ethers";
 import { SimpleAccountAPI } from "@zerodevapp/sdk/dist/src/SimpleAccountAPI";
+import { VerifyingPaymasterAPI } from "@zerodevapp/sdk/dist/src/paymasters/VerifyingPaymasterAPI";
 import { printOp } from "../utils/utils";
 import { getHttpRpcClient } from "../utils/utils";
 import { getPaymaster } from "./paymaster";
@@ -17,6 +16,8 @@ export const getSmartAccount = async (
   provider: ethers.providers.JsonRpcProvider,
   signer: Signer
 ) => {
+  const chainId = (await provider.getNetwork()).chainId;
+  console.log("getting from paymaster");
   const paymasterAPI = await getPaymaster(paymasterURL);
   const api = new SimpleAccountAPI({
     owner: signer,
@@ -32,6 +33,8 @@ export const getSmartAccountAPI = async (
   provider: ethers.providers.JsonRpcProvider,
   signer: Signer
 ) => {
+  console.log("getting smart wallet");
+  const chainId = (await provider.getNetwork()).chainId;
   const paymasterAPI = await getPaymaster(paymasterURL);
   const api = new SimpleAccountAPI({
     owner: signer,
@@ -40,6 +43,8 @@ export const getSmartAccountAPI = async (
     factoryAddress: factoryAddress,
     paymasterAPI,
   });
+  const address = api.getCounterFactualAddress();
+  console.log(address);
   return api;
 };
 
@@ -50,8 +55,8 @@ export const sendNewTransaction = async (
 ) => {
   txnState("creating new userOp", stateFns);
 
+  const chainId = (await provider.getNetwork()).chainId;
   const paymasterAPI = await getPaymaster(paymasterURL);
-
   const entrypointView = EntryPoint__factory.connect(entryPointAddress, signer);
 
   txnState(
@@ -89,7 +94,6 @@ export const sendNewTransaction = async (
   console.log(`userOp hash: ${uoHash}`);
   txnState("waiting for transaction confirmation", stateFns);
   const fromBlock = (await provider.getBlockNumber()) - 1000;
-  const chainId = (await provider.getNetwork()).chainId;
   const queryFromBlock = chainId === 31337 ? 0 : fromBlock;
   let txnHash = (await getUserOpReceipt(
     uoHash,
