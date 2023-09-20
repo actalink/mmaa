@@ -4,5 +4,5 @@ import { VerifyingPaymasterAPI } from "./VerifyingPaymasterAPI";
 export async function getPaymaster(
   paymasterUrl: string
 ): Promise<PaymasterAPI> {
-  return new VerifyingPaymasterAPI(paymasterUrl);
+  return new VerifyingPaymasterAPI(paymasterUrl, "ALCHEMY");
 }

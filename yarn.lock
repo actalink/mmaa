@@ -1682,7 +1682,7 @@
   resolved "https://registry.yarnpkg.com/@zerodevapp/contracts/-/contracts-2.0.8.tgz#b9e6164a032a3128428935f96440cc72f44b0e65"
   integrity sha512-o76jzJPJ2nb2zR72jP+R8AzFuEEAqtjPdMOKaQ9Jl/5XPf6CIAX6BjExFKNhJkuNOHhnoWuNABOlwfIifLGHvA==
 
-"@zerodevapp/kernel-contracts-v2@npm:@zerodevapp/contracts@^4.0.0-beta.9":
+"@zerodevapp/kernel-contracts-v2@npm:@zerodevapp/contracts@^4.0.0-beta.15":
   version "4.0.0-beta.15"
   resolved "https://registry.yarnpkg.com/@zerodevapp/contracts/-/contracts-4.0.0-beta.15.tgz#7baa762d1a67bf8d3cde31c43c60c4955aae6fd6"
   integrity sha512-NtNvINg2nzE5ZyskvJtMQjm2XMc26GNcHEsDkDxs6cEAnRomsBb7J8EdniJbF+8xYqszuBGCzwG9fxe6fFYKLw==
@@ -1690,10 +1690,10 @@
     "@account-abstraction/contracts" "^0.6.0"
     dotenv "^16.0.3"
 
-"@zerodevapp/sdk@3.1.37":
-  version "3.1.37"
-  resolved "https://registry.yarnpkg.com/@zerodevapp/sdk/-/sdk-3.1.37.tgz#95e5ac50b750e2d17c485e116b62d115d0801b97"
-  integrity sha512-fFWeWpnXilDJjN215BcBg9gQVFt9duvO4Rzf2aXiqqi8s3aiqqQtHkQz6xdy8hNcJLCKsiu41/0pdcidGrktkQ==
+"@zerodevapp/sdk@^3.1.37":
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/@zerodevapp/sdk/-/sdk-3.2.6.tgz#f87f96b12e7a0683ddc369f9666e5b9b76b9a83d"
+  integrity sha512-FyUYabxfyAT0dEm6Q4FL2XwcUUCT/R/Im4EIZ2t2Q5tjDNfUh3R2e1JHZmHdj7PEwY1CcociGGBpf9eiUULRvw==
   dependencies:
     "@account-abstraction/contracts" "^0.6.0"
     "@account-abstraction/utils" "^0.4.0"
@@ -1709,7 +1709,7 @@
     "@types/debug" "^4.1.7"
     "@zerodevapp/contracts" "^2.0.8"
     "@zerodevapp/contracts-new" "npm:@zerodevapp/contracts@^3.0.0-rc.5"
-    "@zerodevapp/kernel-contracts-v2" "npm:@zerodevapp/contracts@^4.0.0-beta.9"
+    "@zerodevapp/kernel-contracts-v2" "npm:@zerodevapp/contracts@^4.0.0-beta.15"
     base64-js "^1.5.1"
     debug "^4.3.4"
     merkletreejs "^0.3.9"
